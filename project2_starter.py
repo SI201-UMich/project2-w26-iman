@@ -257,7 +257,35 @@ def output_csv(data, filename) -> None:
     # ==============================
     # YOUR CODE STARTS HERE
     # ==============================
-    pass
+    header = [
+       "Listing Title",
+       "Listing ID",
+       "Policy Number",
+       "Host Type",
+       "Host Name",
+       "Room Type",
+       "Location Rating",
+   ]
+
+
+    sorted_data = sorted(data, key=lambda t: t[6], reverse=True)
+
+
+    with open(filename, "w", newline="", encoding="utf-8") as f:
+       writer = csv.writer(f)
+       writer.writerow(header)
+       for (listing_title, listing_id, policy_number, host_type, host_name, room_type, location_rating) in sorted_data:
+           writer.writerow(
+               [
+                   listing_title,
+                   listing_id,
+                   policy_number,
+                   host_type,
+                   host_name,
+                   room_type,
+                   str(location_rating),
+               ]
+           )
     # ==============================
     # YOUR CODE ENDS HERE
     # ==============================
