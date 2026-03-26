@@ -41,7 +41,11 @@ def load_listing_results(html_path) -> list[tuple]:
     # ==============================
     # YOUR CODE STARTS HERE
     # ==============================
-    pass
+    def get_listing_details(listing_id) -> dict:
+        path = os.path.join("html_files", f"listing_{listing_id}.html")
+        with open(path, "r", encoding="utf-8-sig") as f:
+            soup = BeautifulSoup(f.read(), "html.parser")
+
     # ==============================
     # YOUR CODE ENDS HERE
     # ==============================
@@ -70,7 +74,18 @@ def get_listing_details(listing_id) -> dict:
     # ==============================
     # YOUR CODE STARTS HERE
     # ==============================
-    pass
+    policy_number = "Exempt"
+    for li in soup.find_all("li", class_="f19phm7j"):
+        text = li.get_text(strip=True)
+        if "Policy number" in text or "policy number" in text:
+            raw = re.sub(r"Policy number\s*:?\s*", "", text, flags=re.I).strip()
+            if re.search(r"pending", raw, re.I):
+                policy_number = "Pending"
+            elif re.search(r"exempt", raw, re.I):
+                policy_number = "Exempt"
+            else:
+                policy_number = raw
+            break
     # ==============================
     # YOUR CODE ENDS HERE
     # ==============================
