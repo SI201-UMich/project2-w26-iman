@@ -340,7 +340,20 @@ def validate_policy_numbers(data) -> list[str]:
     # ==============================
     # YOUR CODE STARTS HERE
     # ==============================
-    pass
+    invalid = []
+    pat1 = re.compile(r"^20\d{2}-00\d{4}STR$")
+    pat2 = re.compile(r"^STR-\d{7}$")
+
+
+    for row in data:
+       listing_title, listing_id, policy_number, host_type, host_name, room_type, location_rating = row
+       if policy_number in ("Pending", "Exempt"):
+           continue
+       if not (pat1.match(policy_number) or pat2.match(policy_number)):
+           invalid.append(str(listing_id))
+
+
+    return invalid
     # ==============================
     # YOUR CODE ENDS HERE
     # ==============================
